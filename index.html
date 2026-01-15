@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PS Minecraft服务器 - ps.off.gs</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         /* 基础样式 */
         * {
@@ -56,18 +55,6 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            animation: slideDown 0.5s ease-out;
-        }
-        
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
         
         .header-container {
@@ -86,19 +73,6 @@
             color: var(--mc-green);
             font-size: 2.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
         }
         
         .logo-text h1 {
@@ -188,18 +162,6 @@
             margin-bottom: 20px;
             color: #fff;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
-            animation: fadeInUp 1s ease-out;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
         
         .hero p {
@@ -207,7 +169,6 @@
             max-width: 800px;
             margin: 0 auto 40px;
             color: #e0e0e0;
-            animation: fadeInUp 1s ease-out 0.2s both;
         }
         
         .server-addresses {
@@ -216,7 +177,6 @@
             justify-content: center;
             gap: 30px;
             margin-bottom: 30px;
-            animation: fadeInUp 1s ease-out 0.4s both;
         }
         
         .server-address {
@@ -286,6 +246,7 @@
             text-align: center;
             width: 100%;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .server-address.bedwars .address-box {
@@ -325,30 +286,12 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            animation: fadeInUp 1s ease-out 0.6s both;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
         }
         
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
             background: linear-gradient(to right, var(--mc-dark-green), var(--mc-green));
-        }
-        
-        .cta-button:hover::after {
-            left: 100%;
         }
         
         /* 服务器特色 */
@@ -397,12 +340,6 @@
             border: 1px solid var(--mc-gray);
             position: relative;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .feature-card.animated {
-            animation: fadeInUp 0.6s ease-out forwards;
         }
         
         .feature-card:hover {
@@ -429,7 +366,7 @@
         }
         
         .feature-card:hover .feature-icon {
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.1);
         }
         
         .feature-card h3 {
@@ -459,12 +396,6 @@
             max-width: 500px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .mode-card.animated {
-            animation: fadeInUp 0.6s ease-out forwards;
         }
         
         .mode-card:hover {
@@ -500,11 +431,6 @@
             border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
             position: relative;
             padding-left: 25px;
-            transition: padding-left 0.3s ease;
-        }
-        
-        .mode-body li:hover {
-            padding-left: 30px;
         }
         
         .mode-body li::before {
@@ -532,12 +458,6 @@
             border-radius: 10px;
             padding: 40px;
             border-left: 5px solid var(--mc-green);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .schedule-info.animated {
-            animation: fadeInUp 0.6s ease-out forwards;
         }
         
         .schedule-info h3 {
@@ -558,11 +478,10 @@
             margin-bottom: 10px;
             border-radius: 5px;
             border-left: 4px solid var(--mc-green);
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            transition: background-color 0.3s ease;
         }
         
         .time-slot:hover {
-            transform: translateX(5px);
             background-color: rgba(0, 0, 0, 0.3);
         }
         
@@ -617,24 +536,12 @@
             text-align: center;
             border: 2px solid #12b7f5;
             box-shadow: 0 10px 30px rgba(18, 183, 245, 0.2);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .qq-card.animated {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-        
-        .qq-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(18, 183, 245, 0.3);
         }
         
         .qq-icon {
             font-size: 4rem;
             color: #12b7f5;
             margin-bottom: 20px;
-            animation: pulse 2s infinite;
         }
         
         .qq-number {
@@ -648,28 +555,11 @@
             border: 2px dashed #12b7f5;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .qq-number::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
         }
         
         .qq-number:hover {
             background-color: rgba(18, 183, 245, 0.1);
             transform: scale(1.03);
-        }
-        
-        .qq-number:hover::after {
-            left: 100%;
         }
         
         .qq-desc {
@@ -690,12 +580,6 @@
             border-radius: 10px;
             padding: 40px;
             border-left: 5px solid var(--mc-green);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .rules-list.animated {
-            animation: fadeInUp 0.6s ease-out forwards;
         }
         
         .rules-list ol {
@@ -707,11 +591,6 @@
             margin-bottom: 15px;
             padding-left: 10px;
             font-size: 1.1rem;
-            transition: padding-left 0.3s ease;
-        }
-        
-        .rules-list li:hover {
-            padding-left: 15px;
         }
         
         .rules-list strong {
@@ -737,17 +616,7 @@
             min-width: 250px;
             margin-bottom: 30px;
             padding-right: 20px;
-            opacity: 0;
-            transform: translateY(20px);
         }
-        
-        .footer-column.animated {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-        
-        .footer-column:nth-child(1) { animation-delay: 0.1s; }
-        .footer-column:nth-child(2) { animation-delay: 0.2s; }
-        .footer-column:nth-child(3) { animation-delay: 0.3s; }
         
         .footer-column h3 {
             color: var(--mc-diamond);
@@ -768,12 +637,11 @@
         .footer-links a {
             color: #ccc;
             text-decoration: none;
-            transition: color 0.3s ease, padding-left 0.3s ease;
+            transition: color 0.3s ease;
         }
         
         .footer-links a:hover {
             color: var(--mc-green);
-            padding-left: 5px;
         }
         
         .social-links {
@@ -797,7 +665,7 @@
         
         .social-links a:hover {
             background-color: var(--mc-green);
-            transform: translateY(-3px) rotate(10deg);
+            transform: translateY(-3px);
         }
         
         .copyright {
@@ -817,11 +685,9 @@
         .credit a {
             color: var(--mc-diamond);
             text-decoration: none;
-            transition: color 0.3s ease;
         }
         
         .credit a:hover {
-            color: var(--mc-green);
             text-decoration: underline;
         }
         
@@ -831,11 +697,6 @@
             height: 20px;
             margin: 0 5px;
             vertical-align: middle;
-            transition: transform 0.3s ease;
-        }
-        
-        .mc-block:hover {
-            transform: rotate(15deg) scale(1.2);
         }
         
         .grass-block {
@@ -1287,89 +1148,52 @@
             });
         });
 
+        // 直接点击地址框复制功能
+        document.querySelectorAll('.address-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const address = this.getAttribute('data-address');
+                const serverName = this.closest('.server-address').querySelector('h3').textContent;
+                
+                navigator.clipboard.writeText(address).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = '已复制！';
+                    
+                    // 临时改变样式
+                    const originalColor = this.style.color;
+                    const originalBg = this.style.backgroundColor;
+                    this.style.color = '#fff';
+                    this.style.backgroundColor = '#2ecc71';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.color = originalColor;
+                        this.style.backgroundColor = originalBg;
+                    }, 1500);
+                });
+            });
+        });
+
         // 加入服务器按钮 - 复制地址功能
         document.querySelector('.cta-button').addEventListener('click', function(e) {
             e.preventDefault();
             
-            // 显示地址选择弹窗
-            const addressSelect = document.createElement('div');
-            addressSelect.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.8);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 10000;
-                backdrop-filter: blur(5px);
-            `;
-            
-            addressSelect.innerHTML = `
-                <div style="background: rgba(40,40,40,0.95); padding: 30px; border-radius: 10px; border: 3px solid var(--mc-green); max-width: 500px; width: 90%; text-align: center;">
-                    <h3 style="color: var(--mc-diamond); margin-bottom: 20px;">选择要复制的服务器地址</h3>
-                    <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px;">
-                        <button class="address-option" data-address="ps.off.gs" style="background: rgba(91,124,58,0.2); color: white; border: 2px solid var(--mc-green); padding: 15px; border-radius: 8px; cursor: pointer; font-size: 1.1rem; transition: all 0.3s;">
-                            <strong>生存服务器</strong><br>
-                            <span style="font-family: monospace; color: var(--mc-green);">ps.off.gs</span><br>
-                            <small>版本: 1.21.11</small>
-                        </button>
-                        <button class="address-option" data-address="ps-bw.of.cd" style="background: rgba(255,107,107,0.2); color: white; border: 2px solid var(--mc-bedwars); padding: 15px; border-radius: 8px; cursor: pointer; font-size: 1.1rem; transition: all 0.3s;">
-                            <strong>起床战争服务器</strong><br>
-                            <span style="font-family: monospace; color: var(--mc-bedwars);">ps-bw.of.cd</span><br>
-                            <small>版本: 1.12.2</small>
-                        </button>
-                    </div>
-                    <button id="closeAddressSelect" style="background: #555; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">取消</button>
-                </div>
-            `;
-            
-            document.body.appendChild(addressSelect);
-            
-            // 地址选项点击事件
-            addressSelect.querySelectorAll('.address-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    const address = this.getAttribute('data-address');
-                    navigator.clipboard.writeText(address).then(() => {
-                        // 显示复制成功消息
-                        const originalText = document.querySelector('.cta-button').textContent;
-                        document.querySelector('.cta-button').textContent = '地址已复制！';
-                        document.querySelector('.cta-button').style.backgroundColor = '#2ecc71';
-                        
-                        setTimeout(() => {
-                            document.querySelector('.cta-button').textContent = originalText;
-                            document.querySelector('.cta-button').style.backgroundColor = '';
-                        }, 2000);
-                        
-                        // 关闭弹窗
-                        document.body.removeChild(addressSelect);
-                    });
-                });
+            // 复制服务器地址到剪贴板
+            const address = 'ps.off.gs';
+            navigator.clipboard.writeText(address).then(() => {
+                // 显示复制成功消息
+                const originalText = this.textContent;
+                this.textContent = '地址已复制！';
+                this.style.backgroundColor = '#2ecc71';
                 
-                // 悬停效果
-                option.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-3px)';
-                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
-                });
-                
-                option.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = 'none';
-                });
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.backgroundColor = '';
+                }, 2000);
             });
             
-            // 关闭弹窗
-            addressSelect.querySelector('#closeAddressSelect').addEventListener('click', function() {
-                document.body.removeChild(addressSelect);
-            });
-            
-            // 点击背景关闭
-            addressSelect.addEventListener('click', function(e) {
-                if(e.target === this) {
-                    document.body.removeChild(addressSelect);
-                }
+            // 滚动到服务器地址区域
+            document.querySelector('.server-addresses').scrollIntoView({
+                behavior: 'smooth'
             });
         });
 
@@ -1390,9 +1214,9 @@
             });
         });
 
-        // 页面滚动时更新活动导航链接和触发动画
+        // 页面滚动时更新活动导航链接
         window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('section, footer');
+            const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('nav a');
             
             let current = '';
@@ -1401,14 +1225,6 @@
                 const sectionHeight = section.clientHeight;
                 if(pageYOffset >= (sectionTop - 100)) {
                     current = section.getAttribute('id');
-                    
-                    // 触发该部分的动画
-                    const elements = section.querySelectorAll('.feature-card, .mode-card, .schedule-info, .qq-card, .rules-list, .footer-column');
-                    elements.forEach(el => {
-                        if(el.getBoundingClientRect().top < window.innerHeight - 100) {
-                            el.classList.add('animated');
-                        }
-                    });
                 }
             });
             
@@ -1418,25 +1234,6 @@
                     link.classList.add('active');
                 }
             });
-        });
-
-        // 页面加载时触发可见元素的动画
-        function animateOnLoad() {
-            const elements = document.querySelectorAll('.feature-card, .mode-card, .schedule-info, .qq-card, .rules-list, .footer-column');
-            elements.forEach(el => {
-                if(el.getBoundingClientRect().top < window.innerHeight - 100) {
-                    el.classList.add('animated');
-                }
-            });
-        }
-
-        // 页面加载完成后执行
-        window.addEventListener('load', function() {
-            // 初始动画
-            animateOnLoad();
-            
-            // 初始化页面滚动
-            window.dispatchEvent(new Event('scroll'));
         });
 
         // 更新开放时间状态（根据当前时间）
@@ -1479,7 +1276,6 @@
                 border-radius: 8px;
                 font-size: 1.2rem;
                 font-weight: bold;
-                animation: fadeInUp 0.5s ease-out;
             `;
             
             if (isOpen) {
