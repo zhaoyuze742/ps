@@ -3,17 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PS Minecraft服务器 - ps.off.gs</title>
+    <title>PowerShell Minecraft服务器 - ps.off.gs</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 基础样式 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-        }
-        
+        /* 基础样式 - 深色模式 */
         :root {
             --mc-green: #5b7c3a;
             --mc-dark-green: #3a511a;
@@ -28,16 +21,47 @@
             --mc-water: #1e90ff;
             --mc-diamond: #4ee2ec;
             --mc-bedwars: #FF6B6B;
+            --ps-blue: #012456;
+            --ps-light-blue: #0078d4;
+            --ps-dark-blue: #00188f;
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text-primary: #f0f0f0;
+            --text-secondary: #8b949e;
+            --border-color: #30363d;
+            --card-bg: rgba(22, 27, 34, 0.9);
+        }
+        
+        /* 浅色模式变量 */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-primary: #ffffff;
+                --bg-secondary: #f6f8fa;
+                --bg-tertiary: #eaeef2;
+                --text-primary: #24292f;
+                --text-secondary: #57606a;
+                --border-color: #d0d7de;
+                --card-bg: rgba(246, 248, 250, 0.9);
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
         }
         
         body {
-            background-color: #1a1a1a;
-            color: #f0f0f0;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
             background-image: 
-                radial-gradient(circle at 25% 25%, rgba(91, 124, 58, 0.1) 0%, transparent 55%),
-                radial-gradient(circle at 75% 75%, rgba(59, 81, 26, 0.1) 0%, transparent 55%);
+                radial-gradient(circle at 25% 25%, rgba(1, 36, 86, 0.15) 0%, transparent 55%),
+                radial-gradient(circle at 75% 75%, rgba(0, 120, 212, 0.15) 0%, transparent 55%);
             min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .container {
@@ -48,13 +72,21 @@
         
         /* 头部样式 */
         header {
-            background-color: rgba(26, 26, 26, 0.95);
-            border-bottom: 4px solid var(--mc-green);
+            background-color: rgba(13, 17, 23, 0.95);
+            border-bottom: 4px solid var(--ps-light-blue);
             padding: 20px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        @media (prefers-color-scheme: light) {
+            header {
+                background-color: rgba(255, 255, 255, 0.95);
+                border-bottom: 4px solid var(--ps-light-blue);
+            }
         }
         
         .header-container {
@@ -70,23 +102,121 @@
         }
         
         .logo-icon {
-            color: var(--mc-green);
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--ps-dark-blue), var(--ps-light-blue));
+            box-shadow: 0 4px 12px rgba(0, 120, 212, 0.3);
+            transition: all 0.3s ease;
         }
         
-        .logo-text h1 {
+        .logo-icon:hover {
+            transform: rotate(5deg) scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 120, 212, 0.4);
+        }
+        
+        .logo-icon img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .server-name {
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            height: 45px;
+        }
+        
+        .ps-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .ps-container:hover {
+            background: rgba(1, 36, 86, 0.2);
+        }
+        
+        .ps-letters {
+            display: flex;
             font-size: 2.2rem;
-            background: linear-gradient(to right, var(--mc-green), var(--mc-diamond));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-weight: bold;
             letter-spacing: 1px;
         }
         
+        .ps-letter {
+            position: relative;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(1, 36, 86, 0.8);
+        }
+        
+        .ps-letter.p {
+            color: var(--ps-light-blue);
+        }
+        
+        .ps-letter.s {
+            color: var(--ps-light-blue);
+        }
+        
+        .full-name {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .ps-container:hover .full-name {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .ps-container:hover .ps-letters {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        
+        .full-letter {
+            font-size: 2.2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+        
+        .full-letter:nth-child(1) { color: var(--ps-light-blue); } /* P */
+        .full-letter:nth-child(2) { color: #fff; } /* o */
+        .full-letter:nth-child(3) { color: #fff; } /* w */
+        .full-letter:nth-child(4) { color: #fff; } /* e */
+        .full-letter:nth-child(5) { color: var(--ps-light-blue); } /* r */
+        .full-letter:nth-child(6) { color: #fff; } /* S */
+        .full-letter:nth-child(7) { color: var(--ps-light-blue); } /* h */
+        .full-letter:nth-child(8) { color: #fff; } /* e */
+        .full-letter:nth-child(9) { color: #fff; } /* l */
+        .full-letter:nth-child(10) { color: #fff; } /* l */
+        
         .logo-text p {
-            color: var(--mc-light-gray);
+            color: var(--text-secondary);
             font-size: 0.9rem;
+            margin-top: 5px;
         }
         
         nav ul {
@@ -96,7 +226,7 @@
         }
         
         nav a {
-            color: #f0f0f0;
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 600;
             padding: 8px 12px;
@@ -106,8 +236,8 @@
         }
         
         nav a:hover, nav a.active {
-            color: var(--mc-green);
-            background-color: rgba(91, 124, 58, 0.1);
+            color: var(--ps-light-blue);
+            background-color: rgba(1, 36, 86, 0.1);
         }
         
         nav a::after {
@@ -118,7 +248,7 @@
             transform: translateX(-50%);
             width: 0;
             height: 2px;
-            background-color: var(--mc-green);
+            background-color: var(--ps-light-blue);
             transition: width 0.3s ease;
         }
         
@@ -130,7 +260,7 @@
             display: none;
             background: none;
             border: none;
-            color: #f0f0f0;
+            color: var(--text-primary);
             font-size: 1.5rem;
             cursor: pointer;
         }
@@ -139,7 +269,7 @@
         .hero {
             padding: 100px 0 80px;
             text-align: center;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background: linear-gradient(rgba(13, 17, 23, 0.85), rgba(13, 17, 23, 0.95)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
             background-size: cover;
             background-position: center;
             position: relative;
@@ -153,7 +283,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.383 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 13.278 60.562 12 50 12c-10.626 0-16.855 1.397-26.66 5.063l-1.767.662c-2.475.923-4.66 1.674-6.724 2.275h6.335zm0-20C13.258 2.892 8.077 4 0 4V2c5.744 0 9.951-.574 14.85-2h6.334zM77.38 0C85.239 2.966 90.502 4 100 4V2c-6.842 0-11.386-.542-16.396-2h-6.225zM0 14c8.44 0 13.718-1.21 22.272-4.402l1.768-.661C33.64 5.347 39.647 4 50 4c10.271 0 15.362 1.222 24.629 4.928C84.112 12.722 89.438 14 100 14v-2c-10.271 0-15.362-1.222-24.629-4.928C65.888 3.278 60.562 2 50 2 39.374 2 33.145 3.397 23.34 7.063l-1.767.662C13.223 10.84 8.163 12 0 12v2z' fill='%235b7c3a' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M21.184 20c.357-.13.72-.264 1.088-.402l1.768-.661C33.64 15.347 39.647 14 50 14c10.271 0 15.362 1.222 24.629 4.928.955.383 1.869.74 2.75 1.072h6.225c-2.51-.73-5.139-1.691-8.233-2.928C65.888 13.278 60.562 12 50 12c-10.626 0-16.855 1.397-26.66 5.063l-1.767.662c-2.475.923-4.66 1.674-6.724 2.275h6.335zm0-20C13.258 2.892 8.077 4 0 4V2c5.744 0 9.951-.574 14.85-2h6.334zM77.38 0C85.239 2.966 90.502 4 100 4V2c-6.842 0-11.386-.542-16.396-2h-6.225zM0 14c8.44 0 13.718-1.21 22.272-4.402l1.768-.661C33.64 5.347 39.647 4 50 4c10.271 0 15.362 1.222 24.629 4.928C84.112 12.722 89.438 14 100 14v-2c-10.271 0-15.362-1.222-24.629-4.928C65.888 3.278 60.562 2 50 2 39.374 2 33.145 3.397 23.34 7.063l-1.767.662C13.223 10.84 8.163 12 0 12v2z' fill='%230078d4' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
             pointer-events: none;
         }
         
@@ -186,17 +316,18 @@
             background: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
-            border: 3px solid var(--mc-green);
-            box-shadow: 0 0 20px rgba(91, 124, 58, 0.5);
+            border: 3px solid var(--ps-light-blue);
+            box-shadow: 0 0 20px rgba(0, 120, 212, 0.5);
             min-width: 300px;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            background-color: var(--card-bg);
         }
         
         .server-address:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(91, 124, 58, 0.7);
+            box-shadow: 0 10px 25px rgba(0, 120, 212, 0.7);
         }
         
         .server-address.bedwars {
@@ -215,7 +346,7 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background: linear-gradient(to right, var(--mc-green), var(--mc-diamond));
+            background: linear-gradient(to right, var(--ps-dark-blue), var(--ps-light-blue));
         }
         
         .server-address.bedwars::before {
@@ -223,7 +354,7 @@
         }
         
         .server-address h3 {
-            color: var(--mc-diamond);
+            color: var(--ps-light-blue);
             font-size: 1.3rem;
             margin-bottom: 10px;
             text-align: center;
@@ -234,19 +365,20 @@
         }
         
         .address-box {
-            background-color: #000;
+            background-color: rgba(0, 0, 0, 0.3);
             padding: 12px 20px;
             border-radius: 6px;
             font-family: monospace;
             font-size: 1.5rem;
             font-weight: bold;
-            color: var(--mc-green);
-            border: 2px solid var(--mc-dark-green);
+            color: var(--ps-light-blue);
+            border: 2px solid var(--ps-dark-blue);
             letter-spacing: 1px;
             text-align: center;
             width: 100%;
             transition: all 0.3s ease;
             cursor: pointer;
+            background-color: var(--bg-tertiary);
         }
         
         .server-address.bedwars .address-box {
@@ -255,7 +387,7 @@
         }
         
         .address-box:hover {
-            background-color: rgba(91, 124, 58, 0.1);
+            background-color: rgba(0, 120, 212, 0.1);
         }
         
         .server-address.bedwars .address-box:hover {
@@ -265,7 +397,7 @@
         .server-version {
             margin-top: 10px;
             font-size: 0.9rem;
-            color: var(--mc-light-gray);
+            color: var(--text-secondary);
         }
         
         .server-address.bedwars .server-version {
@@ -274,7 +406,7 @@
         
         .cta-button {
             display: inline-block;
-            background: linear-gradient(to right, var(--mc-green), var(--mc-dark-green));
+            background: linear-gradient(to right, var(--ps-dark-blue), var(--ps-light-blue));
             color: white;
             padding: 15px 35px;
             border-radius: 8px;
@@ -291,13 +423,13 @@
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-            background: linear-gradient(to right, var(--mc-dark-green), var(--mc-green));
+            background: linear-gradient(to right, var(--ps-light-blue), var(--ps-dark-blue));
         }
         
         /* 服务器特色 */
         .features {
             padding: 80px 0;
-            background-color: rgba(30, 30, 30, 0.9);
+            background-color: var(--bg-secondary);
         }
         
         .section-title {
@@ -308,7 +440,7 @@
         
         .section-title h2 {
             font-size: 2.8rem;
-            color: var(--mc-diamond);
+            color: var(--ps-light-blue);
             display: inline-block;
             padding-bottom: 15px;
         }
@@ -321,7 +453,7 @@
             transform: translateX(-50%);
             width: 150px;
             height: 4px;
-            background: linear-gradient(to right, var(--mc-green), var(--mc-diamond));
+            background: linear-gradient(to right, var(--ps-dark-blue), var(--ps-light-blue));
             border-radius: 2px;
         }
         
@@ -332,12 +464,12 @@
         }
         
         .feature-card {
-            background-color: rgba(40, 40, 40, 0.8);
+            background-color: var(--card-bg);
             border-radius: 10px;
             padding: 30px;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid var(--mc-gray);
+            border: 1px solid var(--border-color);
             position: relative;
             overflow: hidden;
         }
@@ -345,7 +477,7 @@
         .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            border-color: var(--mc-green);
+            border-color: var(--ps-light-blue);
         }
         
         .feature-card::before {
@@ -355,12 +487,12 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background: linear-gradient(to right, var(--mc-green), var(--mc-diamond));
+            background: linear-gradient(to right, var(--ps-dark-blue), var(--ps-light-blue));
         }
         
         .feature-icon {
             font-size: 3rem;
-            color: var(--mc-green);
+            color: var(--ps-light-blue);
             margin-bottom: 20px;
             transition: transform 0.3s ease;
         }
@@ -372,13 +504,17 @@
         .feature-card h3 {
             font-size: 1.8rem;
             margin-bottom: 15px;
-            color: #fff;
+            color: var(--text-primary);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
         }
         
         /* 游戏模式 */
         .game-modes {
             padding: 80px 0;
-            background-color: rgba(20, 20, 20, 0.9);
+            background-color: var(--bg-tertiary);
         }
         
         .mode-cards {
@@ -389,13 +525,14 @@
         }
         
         .mode-card {
-            background-color: rgba(50, 50, 50, 0.8);
+            background-color: var(--card-bg);
             border-radius: 10px;
             overflow: hidden;
             width: 100%;
             max-width: 500px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
         }
         
         .mode-card:hover {
@@ -405,12 +542,12 @@
         .mode-header {
             padding: 20px;
             text-align: center;
-            background-color: var(--mc-dark-green);
+            background: linear-gradient(to right, var(--ps-dark-blue), var(--ps-light-blue));
             color: white;
         }
         
         .mode-header.bedwars {
-            background-color: var(--mc-bedwars);
+            background: linear-gradient(to right, var(--mc-bedwars), #FF8E53);
         }
         
         .mode-header h3 {
@@ -428,16 +565,17 @@
         
         .mode-body li {
             padding: 8px 0;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            border-bottom: 1px dashed var(--border-color);
             position: relative;
             padding-left: 25px;
+            color: var(--text-primary);
         }
         
         .mode-body li::before {
             content: '✓';
             position: absolute;
             left: 0;
-            color: var(--mc-green);
+            color: var(--ps-light-blue);
             font-weight: bold;
         }
         
@@ -448,22 +586,27 @@
         /* 开放时间部分 */
         .schedule {
             padding: 80px 0;
-            background-color: rgba(30, 30, 30, 0.9);
+            background-color: var(--bg-secondary);
         }
         
         .schedule-info {
             max-width: 800px;
             margin: 0 auto;
-            background-color: rgba(40, 40, 40, 0.8);
+            background-color: var(--card-bg);
             border-radius: 10px;
             padding: 40px;
-            border-left: 5px solid var(--mc-green);
+            border-left: 5px solid var(--ps-light-blue);
+            border: 1px solid var(--border-color);
         }
         
         .schedule-info h3 {
-            color: var(--mc-diamond);
+            color: var(--ps-light-blue);
             margin-bottom: 20px;
             font-size: 1.8rem;
+        }
+        
+        .schedule-info p {
+            color: var(--text-secondary);
         }
         
         .time-table {
@@ -477,8 +620,9 @@
             background-color: rgba(0, 0, 0, 0.2);
             margin-bottom: 10px;
             border-radius: 5px;
-            border-left: 4px solid var(--mc-green);
+            border-left: 4px solid var(--ps-light-blue);
             transition: background-color 0.3s ease;
+            background-color: var(--bg-tertiary);
         }
         
         .time-slot:hover {
@@ -491,17 +635,18 @@
         }
         
         .time-slot.open {
-            border-left-color: var(--mc-green);
+            border-left-color: var(--ps-light-blue);
         }
         
         .day {
             font-weight: bold;
             font-size: 1.1rem;
+            color: var(--text-primary);
         }
         
         .time {
             font-weight: bold;
-            color: var(--mc-diamond);
+            color: var(--ps-light-blue);
         }
         
         .status {
@@ -512,8 +657,8 @@
         }
         
         .status.open {
-            background-color: rgba(91, 124, 58, 0.2);
-            color: var(--mc-green);
+            background-color: rgba(0, 120, 212, 0.2);
+            color: var(--ps-light-blue);
         }
         
         .status.closed {
@@ -524,18 +669,19 @@
         /* QQ群部分 */
         .qq-group {
             padding: 80px 0;
-            background-color: rgba(20, 20, 20, 0.9);
+            background-color: var(--bg-tertiary);
         }
         
         .qq-card {
             max-width: 500px;
             margin: 0 auto;
-            background-color: rgba(40, 40, 40, 0.8);
+            background-color: var(--card-bg);
             border-radius: 10px;
             padding: 40px;
             text-align: center;
             border: 2px solid #12b7f5;
             box-shadow: 0 10px 30px rgba(18, 183, 245, 0.2);
+            border: 1px solid var(--border-color);
         }
         
         .qq-icon {
@@ -550,7 +696,7 @@
             color: #12b7f5;
             margin: 20px 0;
             padding: 15px;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: var(--bg-tertiary);
             border-radius: 8px;
             border: 2px dashed #12b7f5;
             cursor: pointer;
@@ -564,22 +710,23 @@
         
         .qq-desc {
             margin-top: 20px;
-            color: #ccc;
+            color: var(--text-secondary);
         }
         
         /* 规则部分 */
         .rules {
             padding: 80px 0;
-            background-color: rgba(30, 30, 30, 0.9);
+            background-color: var(--bg-secondary);
         }
         
         .rules-list {
             max-width: 800px;
             margin: 0 auto;
-            background-color: rgba(40, 40, 40, 0.8);
+            background-color: var(--card-bg);
             border-radius: 10px;
             padding: 40px;
-            border-left: 5px solid var(--mc-green);
+            border-left: 5px solid var(--ps-light-blue);
+            border: 1px solid var(--border-color);
         }
         
         .rules-list ol {
@@ -591,17 +738,22 @@
             margin-bottom: 15px;
             padding-left: 10px;
             font-size: 1.1rem;
+            color: var(--text-primary);
         }
         
         .rules-list strong {
-            color: var(--mc-diamond);
+            color: var(--ps-light-blue);
+        }
+        
+        .rules-list p {
+            color: var(--text-secondary);
         }
         
         /* 页脚 */
         footer {
-            background-color: rgba(10, 10, 10, 0.95);
+            background-color: var(--bg-primary);
             padding: 50px 0 30px;
-            border-top: 4px solid var(--mc-green);
+            border-top: 4px solid var(--ps-light-blue);
         }
         
         .footer-content {
@@ -619,11 +771,11 @@
         }
         
         .footer-column h3 {
-            color: var(--mc-diamond);
+            color: var(--ps-light-blue);
             margin-bottom: 20px;
             font-size: 1.5rem;
             padding-bottom: 10px;
-            border-bottom: 2px solid rgba(91, 124, 58, 0.3);
+            border-bottom: 2px solid rgba(0, 120, 212, 0.3);
         }
         
         .footer-links {
@@ -632,16 +784,21 @@
         
         .footer-links li {
             margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+        
+        .footer-links strong {
+            color: var(--ps-light-blue);
         }
         
         .footer-links a {
-            color: #ccc;
+            color: var(--text-secondary);
             text-decoration: none;
             transition: color 0.3s ease;
         }
         
         .footer-links a:hover {
-            color: var(--mc-green);
+            color: var(--ps-light-blue);
         }
         
         .social-links {
@@ -664,26 +821,26 @@
         }
         
         .social-links a:hover {
-            background-color: var(--mc-green);
+            background-color: var(--ps-light-blue);
             transform: translateY(-3px);
         }
         
         .copyright {
             text-align: center;
             padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #aaa;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
         
         .credit {
             margin-top: 15px;
             font-size: 0.85rem;
-            color: #777;
+            color: var(--text-secondary);
         }
         
         .credit a {
-            color: var(--mc-diamond);
+            color: var(--ps-light-blue);
             text-decoration: none;
         }
         
@@ -697,6 +854,11 @@
             height: 20px;
             margin: 0 5px;
             vertical-align: middle;
+            transition: transform 0.3s ease;
+        }
+        
+        .mc-block:hover {
+            transform: rotate(15deg) scale(1.2);
         }
         
         .grass-block {
@@ -767,6 +929,10 @@
             .qq-number {
                 font-size: 2rem;
             }
+            
+            .ps-letters, .full-letter {
+                font-size: 1.8rem;
+            }
         }
         
         @media (max-width: 576px) {
@@ -810,6 +976,19 @@
             .qq-number {
                 font-size: 1.8rem;
             }
+            
+            .ps-letters, .full-letter {
+                font-size: 1.5rem;
+            }
+            
+            .server-name {
+                height: 35px;
+            }
+            
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
         }
     </style>
 </head>
@@ -819,10 +998,32 @@
         <div class="container header-container">
             <div class="logo">
                 <div class="logo-icon">
-                    <i class="fas fa-cube"></i>
+                    <img src="image/powershell.jpg" alt="PowerShell Minecraft服务器图标">
                 </div>
                 <div class="logo-text">
-                    <h1>PS Minecraft服务器</h1>
+                    <div class="server-name">
+                        <div class="ps-container">
+                            <!-- 缩写PS -->
+                            <div class="ps-letters">
+                                <span class="ps-letter p">P</span>
+                                <span class="ps-letter s">S</span>
+                            </div>
+                            <!-- 全称PowerShell -->
+                            <div class="full-name">
+                                <span class="full-letter">P</span>
+                                <span class="full-letter">o</span>
+                                <span class="full-letter">w</span>
+                                <span class="full-letter">e</span>
+                                <span class="full-letter">r</span>
+                                <span class="full-letter">S</span>
+                                <span class="full-letter">h</span>
+                                <span class="full-letter">e</span>
+                                <span class="full-letter">l</span>
+                                <span class="full-letter">l</span>
+                            </div>
+                        </div>
+                        <span style="font-size: 2.2rem; margin-left: 10px; color: var(--ps-light-blue);">Minecraft服务器</span>
+                    </div>
                     <p>刚开服的新服务器，欢迎加入！</p>
                 </div>
             </div>
@@ -847,7 +1048,7 @@
     <!-- 英雄区域 -->
     <section class="hero" id="home">
         <div class="container">
-            <h2>欢迎来到PS Minecraft服务器</h2>
+            <h2>欢迎来到PowerShell Minecraft服务器</h2>
             <p>一个刚开服的新服务器！目前提供起床战争和生存模式，欢迎加入我们一起建设这个新社区。</p>
             
             <div class="server-addresses">
@@ -936,7 +1137,7 @@
             
             <div class="mode-cards">
                 <div class="mode-card">
-                    <div class="mode-header" style="background-color: var(--mc-dark-green);">
+                    <div class="mode-header">
                         <h3>生存模式</h3>
                     </div>
                     <div class="mode-body">
@@ -1007,7 +1208,7 @@
                     </div>
                 </div>
                 
-                <p style="margin-top: 20px; color: var(--mc-diamond);"><i class="fas fa-info-circle"></i> 注意：服务器刚开，开放时间可能会根据实际情况调整，请关注QQ群最新通知。</p>
+                <p style="margin-top: 20px; color: var(--ps-light-blue);"><i class="fas fa-info-circle"></i> 注意：服务器刚开，开放时间可能会根据实际情况调整，请关注QQ群最新通知。</p>
             </div>
         </div>
     </section>
@@ -1069,7 +1270,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <h3>PS服务器</h3>
+                    <h3>PowerShell服务器</h3>
                     <p>一个刚开服的Minecraft服务器，目前提供起床战争和生存模式。我们正在建设一个友好的玩家社区，欢迎加入！</p>
                 </div>
                 
@@ -1097,7 +1298,7 @@
             </div>
             
             <div class="copyright">
-                <p>© 2026 PS Minecraft服务器. 保留所有权利. 
+                <p>© 2023 PowerShell Minecraft服务器. 保留所有权利. 
                     <span class="mc-block grass-block"></span>
                     <span class="mc-block dirt-block"></span>
                     <span class="mc-block stone-block"></span>
@@ -1279,9 +1480,9 @@
             `;
             
             if (isOpen) {
-                statusElement.innerHTML = `<i class="fas fa-check-circle"></i> 服务器当前状态：<span style="color: var(--mc-green);">开放中</span> (下次关闭时间：${nextOpenTime})`;
-                statusElement.style.backgroundColor = 'rgba(91, 124, 58, 0.1)';
-                statusElement.style.border = '2px solid var(--mc-green)';
+                statusElement.innerHTML = `<i class="fas fa-check-circle"></i> 服务器当前状态：<span style="color: var(--ps-light-blue);">开放中</span> (下次关闭时间：${nextOpenTime})`;
+                statusElement.style.backgroundColor = 'rgba(0, 120, 212, 0.1)';
+                statusElement.style.border = '2px solid var(--ps-light-blue)';
             } else {
                 statusElement.innerHTML = `<i class="fas fa-times-circle"></i> 服务器当前状态：<span style="color: #ff5555;">关闭中</span> (下次开放时间：${nextOpenTime})`;
                 statusElement.style.backgroundColor = 'rgba(255, 85, 85, 0.1)';
@@ -1304,6 +1505,16 @@
         
         // 每分钟更新一次状态
         setInterval(updateScheduleStatus, 60000);
+        
+        // 图片加载失败时的备用方案
+        document.querySelector('.logo-icon img').addEventListener('error', function() {
+            this.style.display = 'none';
+            const icon = document.createElement('i');
+            icon.className = 'fab fa-windows';
+            icon.style.fontSize = '1.8rem';
+            icon.style.color = '#fff';
+            this.parentElement.appendChild(icon);
+        });
     </script>
 </body>
 </html>
