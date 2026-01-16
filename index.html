@@ -126,7 +126,7 @@
             object-fit: contain;
         }
         
-        /* 修复深色模式下图标显示 */
+        /* 修复：只在深色模式下对图片应用filter，不对文字应用 */
         @media (prefers-color-scheme: dark) {
             .logo-icon img {
                 filter: brightness(0) invert(1);
@@ -157,8 +157,8 @@
             border-radius: 5px;
             min-width: 60px; /* 为PS缩写保留最小宽度 */
             height: 45px;
-            overflow: hidden;
-            background: rgba(1, 36, 86, 0);
+            overflow: visible; /* 修复：改为visible确保文字可见 */
+            background: transparent; /* 修复：移除背景色 */
         }
         
         .ps-container:hover {
@@ -176,20 +176,13 @@
             top: 50%;
             transform: translateY(-50%);
             white-space: nowrap;
+            z-index: 2; /* 修复：确保在顶层 */
         }
         
         .ps-letter {
             position: relative;
-            color: #fff;
+            color: var(--ps-light-blue); /* 修复：使用蓝色，不是白色 */
             text-shadow: 0 0 10px rgba(1, 36, 86, 0.8);
-        }
-        
-        .ps-letter.p {
-            color: var(--ps-light-blue);
-        }
-        
-        .ps-letter.s {
-            color: var(--ps-light-blue);
         }
         
         .full-name {
@@ -205,6 +198,7 @@
             transition: all 0.5s ease;
             pointer-events: none;
             white-space: nowrap;
+            z-index: 2; /* 修复：确保在顶层 */
         }
         
         .ps-container:hover .full-name {
