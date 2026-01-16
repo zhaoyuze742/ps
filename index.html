@@ -147,97 +147,24 @@
             gap: 10px;
         }
         
-        .ps-container {
-            display: flex;
-            align-items: center;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.5s ease;
-            padding: 5px;
-            border-radius: 5px;
-            min-width: 60px; /* 为PS缩写保留最小宽度 */
-            height: 45px;
-            overflow: visible; /* 修复：改为visible确保文字可见 */
-            background: transparent; /* 修复：移除背景色 */
-        }
-        
-        .ps-container:hover {
-            background: rgba(1, 36, 86, 0.2);
-        }
-        
         .ps-letters {
             display: flex;
             font-size: 2.2rem;
             font-weight: bold;
             letter-spacing: 1px;
-            transition: all 0.5s ease;
-            position: absolute;
-            left: 5px;
-            top: 50%;
-            transform: translateY(-50%);
             white-space: nowrap;
-            z-index: 2; /* 修复：确保在顶层 */
         }
         
         .ps-letter {
             position: relative;
-            color: var(--ps-light-blue); /* 修复：使用蓝色，不是白色 */
+            color: var(--ps-light-blue);
             text-shadow: 0 0 10px rgba(1, 36, 86, 0.8);
         }
-        
-        .full-name {
-            display: flex;
-            font-size: 2.2rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            position: absolute;
-            left: 5px;
-            top: 50%;
-            transform: translateY(-50%) translateX(-100%);
-            opacity: 0;
-            transition: all 0.5s ease;
-            pointer-events: none;
-            white-space: nowrap;
-            z-index: 2; /* 修复：确保在顶层 */
-        }
-        
-        .ps-container:hover .full-name {
-            opacity: 1;
-            transform: translateY(-50%) translateX(0);
-        }
-        
-        .ps-container:hover .ps-letters {
-            opacity: 0;
-            transform: translateY(-50%) translateX(100%);
-        }
-        
-        .full-letter {
-            color: #fff;
-        }
-        
-        .full-letter:nth-child(1) { color: var(--ps-light-blue); } /* P */
-        .full-letter:nth-child(2) { color: #fff; } /* o */
-        .full-letter:nth-child(3) { color: #fff; } /* w */
-        .full-letter:nth-child(4) { color: #fff; } /* e */
-        .full-letter:nth-child(5) { color: var(--ps-light-blue); } /* r */
-        .full-letter:nth-child(6) { color: #fff; } /* S */
-        .full-letter:nth-child(7) { color: var(--ps-light-blue); } /* h */
-        .full-letter:nth-child(8) { color: #fff; } /* e */
-        .full-letter:nth-child(9) { color: #fff; } /* l */
-        .full-letter:nth-child(10) { color: #fff; } /* l */
         
         .server-title {
             font-size: 2.2rem;
             color: var(--ps-light-blue);
             white-space: nowrap;
-            transition: transform 0.5s ease;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* 修复：只在展开时稍微移动，而不是大幅移动 */
-        .ps-container:hover ~ .server-title {
-            transform: translateX(20px);
         }
         
         .logo-text p {
@@ -876,6 +803,29 @@
             text-decoration: underline;
         }
         
+        /* 新增：PS简称和免责声明样式 */
+        .ps-disclaimer {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--ps-light-blue);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .ps-disclaimer strong {
+            color: var(--ps-light-blue);
+        }
+        
+        .ps-abbreviation {
+            display: inline-flex;
+            font-weight: bold;
+            color: var(--ps-light-blue);
+            margin: 0 5px;
+            font-size: 1.2rem;
+        }
+        
         .mc-block {
             display: inline-block;
             width: 20px;
@@ -958,16 +908,12 @@
                 font-size: 2rem;
             }
             
-            .ps-letters, .full-name {
+            .ps-letters {
                 font-size: 1.8rem;
             }
             
             .server-title {
                 font-size: 1.8rem;
-            }
-            
-            .ps-container:hover ~ .server-title {
-                transform: translateX(15px);
             }
         }
         
@@ -1013,7 +959,7 @@
                 font-size: 1.8rem;
             }
             
-            .ps-letters, .full-name {
+            .ps-letters {
                 font-size: 1.5rem;
             }
             
@@ -1035,15 +981,6 @@
                 height: 26px;
             }
             
-            .ps-container {
-                height: 35px;
-                min-width: 45px;
-            }
-            
-            .ps-container:hover ~ .server-title {
-                transform: translateX(10px);
-            }
-            
             .logo-text p {
                 font-size: 0.8rem;
             }
@@ -1061,25 +998,9 @@
                 </div>
                 <div class="logo-text">
                     <div class="server-name">
-                        <div class="ps-container">
-                            <!-- 缩写PS -->
-                            <div class="ps-letters">
-                                <span class="ps-letter p">P</span>
-                                <span class="ps-letter s">S</span>
-                            </div>
-                            <!-- 全称PowerShell -->
-                            <div class="full-name">
-                                <span class="full-letter">P</span>
-                                <span class="full-letter">o</span>
-                                <span class="full-letter">w</span>
-                                <span class="full-letter">e</span>
-                                <span class="full-letter">r</span>
-                                <span class="full-letter">S</span>
-                                <span class="full-letter">h</span>
-                                <span class="full-letter">e</span>
-                                <span class="full-letter">l</span>
-                                <span class="full-letter">l</span>
-                            </div>
+                        <div class="ps-letters">
+                            <span class="ps-letter p">P</span>
+                            <span class="ps-letter s">S</span>
                         </div>
                         <span class="server-title">Minecraft服务器</span>
                     </div>
@@ -1107,7 +1028,7 @@
     <!-- 英雄区域 -->
     <section class="hero" id="home">
         <div class="container">
-            <h2>欢迎来到PowerShell Minecraft服务器</h2>
+            <h2>欢迎来到PS Minecraft服务器</h2>
             <p>一个刚开服的新服务器！目前提供起床战争和生存模式，欢迎加入我们一起建设这个新社区。</p>
             
             <div class="server-addresses">
@@ -1329,7 +1250,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-column">
-                    <h3>PowerShell服务器</h3>
+                    <h3>PS Minecraft服务器</h3>
                     <p>一个刚开服的Minecraft服务器，目前提供起床战争和生存模式。我们正在建设一个友好的玩家社区，欢迎加入！</p>
                 </div>
                 
@@ -1357,7 +1278,7 @@
             </div>
             
             <div class="copyright">
-                <p>© 2023 PowerShell Minecraft服务器. 保留所有权利. 
+                <p>© 2023 PS Minecraft服务器. 保留所有权利. 
                     <span class="mc-block grass-block"></span>
                     <span class="mc-block dirt-block"></span>
                     <span class="mc-block stone-block"></span>
@@ -1367,6 +1288,12 @@
                 
                 <div class="credit">
                     <p>感谢 GitHub Pages 提供静态服务器支持 | 本网站由 <a href="https://github.com/zhaoyuze742" target="_blank">zhaoyuze742</a> 开发</p>
+                </div>
+                
+                <!-- 新增：PS简称和免责声明 -->
+                <div class="ps-disclaimer">
+                    <p><strong>关于名称：</strong>本服务器简称<span class="ps-abbreviation">PS</span>，是"<strong>P</strong>layer<strong>S</strong>erver"的缩写，意为"玩家服务器"。</p>
+                    <p>本网站与微软PowerShell、Windows PowerShell或其他任何技术产品均无任何关联，仅为Minecraft游戏服务器网站。</p>
                 </div>
             </div>
         </div>
